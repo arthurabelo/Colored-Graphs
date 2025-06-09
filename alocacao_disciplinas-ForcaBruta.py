@@ -3,6 +3,8 @@ from collections import defaultdict
 import time  # Para medir o tempo de execução
 import tkinter as tk
 from tkinter import filedialog, messagebox
+import random
+import math
 
 # Inicializa a janela Tk (mas oculta ela)
 tk.Tk().withdraw()
@@ -60,7 +62,6 @@ slots_de_horario_diarios = ["08:00–10:00", "10:00–12:00", "14:00–16:00", "
 pool_de_horarios_reais = [f"{dia} {slot}" for dia in dias_com_folga for slot in slots_de_horario_diarios]
 
 # --- Algoritmo de backtracking ---
-
 def eh_atribuicao_valida(vertice, cor, grafo, atribuicoes_atuais):
     for vizinho in grafo[vertice]:
         if atribuicoes_atuais.get(vizinho) == cor:
@@ -96,17 +97,16 @@ def encontrar_solucao_otima_baseline(grafo_conflitos, todas_as_disciplinas, pool
             horarios_finais = {}
             for disciplina, cor_num in atribuicoes_numericas.items():
                 horarios_finais[disciplina] = pool_de_horarios[cor_num - 1]
-            return horarios_finais, k
-
+            return horarios_finais, k, atribuicoes_numericas
     print(f"🛑  Não foi possível encontrar uma solução com até {limite_k} horários.")
-    return None, -1
+    return None, -1, {}
 
 # --- Execução principal ---
 inicio_execucao = time.time()
 
 nomes_unicos_disciplinas = {disc["nome"].strip() for disc in dados_disciplinas_json}
 
-horarios_otimos, numero_cromatico = encontrar_solucao_otima_baseline(
+horarios_otimos, numero_cromatico, atribuicoes_numericas = encontrar_solucao_otima_baseline(
     grafo_conflitos,
     nomes_unicos_disciplinas,
     pool_de_horarios_reais
@@ -115,32 +115,50 @@ horarios_otimos, numero_cromatico = encontrar_solucao_otima_baseline(
 fim_execucao = time.time()
 print(f"⏰  Tempo total de execução: {fim_execucao - inicio_execucao:.2f} segundos.")
 
+# --- Interface gráfica estilo GraphOnline ---
+def mostrar_grafo_colorizado(grafo, atribuicoes, posicoes=None):
+    # Configurações
+    raio = 25
+    largura = 800
+    altura = 600
+    colors = ["#f44336", "#2196f3", "#4caf50", "#ffeb3b", "#9c27b0", "#ff9800", "#00bcd4", "#8bc34a", "#e91e63", "#795548"]
+
+    vertices = list(grafo.keys())
+    n = len(vertices)
+    if not posicoes:
+        # Distribui em círculo (layout simples)
+        posicoes = {}
+        for i, v in enumerate(vertices):
+            angle = 2 * math.pi * i / n
+            x = largura // 2 + int(250 * math.cos(angle))
+            y = altura // 2 + int(250 * math.sin(angle))
+            posicoes[v] = (x, y)
+
+    root = tk.Tk()
+    root.title("Visualização do Grafo de Conflitos - Estilo GraphOnline")
+    canvas = tk.Canvas(root, width=largura, height=altura, bg="white")
+    canvas.pack()
+
+    # Desenha arestas
+    for v, vizinhos in grafo.items():
+        x1, y1 = posicoes[v]
+        for u in vizinhos:
+            if u > v:  # desenha só uma vez cada aresta
+                x2, y2 = posicoes[u]
+                canvas.create_line(x1, y1, x2, y2, fill="#aaa", width=2)
+
+    # Desenha nós
+    for v in vertices:
+        x, y = posicoes[v]
+        cor = colors[(atribuicoes.get(v, 0) - 1) % len(colors)] if v in atribuicoes else "#bbb"
+        canvas.create_oval(x - raio, y - raio, x + raio, y + raio, fill=cor, outline="#333", width=3)
+        canvas.create_text(x, y, text=v, font=("Arial", 10, "bold"), fill="black")
+
+    root.mainloop()
+
 if horarios_otimos:
-    grade_final_otima = []
-    for info_disciplina in dados_disciplinas_json:
-        nome = info_disciplina["nome"].strip()
-        horario = horarios_otimos.get(nome, "ERRO")
-        grade_final_otima.append({
-            "nome": nome,
-            "professor": info_disciplina["professor"].strip(),
-            "periodo": info_disciplina["periodo"],
-            "horario": horario
-        })
-
-    nome_arquivo_saida = filedialog.asksaveasfilename(
-        title="Salvar tabela de horários como...",
-        defaultextension=".json",
-        filetypes=[("Arquivos JSON", "*.json"), ("Todos os arquivos", "*.*")],
-        initialfile="grade_horarios_otima.json"
-    )
-
-    if not nome_arquivo_saida:
-        messagebox.showwarning("Aviso", "Nenhum local ou nome foi selecionado para salvar o arquivo.")
-        print("⚠️  Salvar arquivo cancelado pelo usuário.")
-    else:
-        with open(nome_arquivo_saida, "w", encoding="utf-8") as f:
-            json.dump(grade_final_otima, f, ensure_ascii=False, indent=4)
-        print(f"✅  Tabela de horários salva em '{nome_arquivo_saida}'.")
+    # ... (restante do seu código de exportação de arquivos aqui)
+    mostrar_grafo_colorizado(grafo_conflitos, atribuicoes_numericas)
 else:
     print("⚠️  Não foi possível gerar a grade horária com solução ótima.")
 
