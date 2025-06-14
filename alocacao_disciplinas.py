@@ -6,6 +6,7 @@ from tkinter import ttk
 import math
 import time
 import timeit
+import random
 
 # Função para carregar o arquivo JSON de entrada
 def carregar_dados_disciplinas():
@@ -28,18 +29,14 @@ def carregar_dados_disciplinas():
         exit()
     return dados_disciplinas_json
 
-# Função para construir o grafo de conflitos
 def construir_grafo_conflitos(dados_disciplinas_json):
-    grafo_conflitos = defaultdict(set) # O grafo é representado como um dicionário de conjuntos para evitar duplicatas
+    grafo_conflitos = defaultdict(set)
     disciplinas_por_periodo = defaultdict(list)
     disciplinas_por_professor = defaultdict(list)
-
     for disciplina_info in dados_disciplinas_json:
         nome_disciplina = disciplina_info["nome"].strip()
         disciplinas_por_periodo[disciplina_info["periodo"]].append(nome_disciplina)
         disciplinas_por_professor[disciplina_info["professor"].strip()].append(nome_disciplina)
-
-    # Conflitos de disciplinas por período
     for disciplinas_do_grupo in disciplinas_por_periodo.values():
         for i in range(len(disciplinas_do_grupo)):
             for j in range(i + 1, len(disciplinas_do_grupo)):
@@ -47,8 +44,6 @@ def construir_grafo_conflitos(dados_disciplinas_json):
                 B = disciplinas_do_grupo[j]
                 grafo_conflitos[A].add(B)
                 grafo_conflitos[B].add(A)
-
-    # Conflitos de disciplinas por professor
     for disciplinas_do_grupo in disciplinas_por_professor.values():
         for i in range(len(disciplinas_do_grupo)):
             for j in range(i + 1, len(disciplinas_do_grupo)):
@@ -58,7 +53,6 @@ def construir_grafo_conflitos(dados_disciplinas_json):
                 grafo_conflitos[B].add(A)
     return grafo_conflitos
 
-# Função para criar a matriz de adjacência
 def criar_matriz_adjacencia(grafo_conflitos, disciplinas_ordenadas):
     n = len(disciplinas_ordenadas)
     matriz = [[0] * n for _ in range(n)]
@@ -68,7 +62,6 @@ def criar_matriz_adjacencia(grafo_conflitos, disciplinas_ordenadas):
                 matriz[i][j] = 1
     return matriz
 
-# Algoritmo Guloso
 def colorir_grafo_guloso(grafo, ordem_vertices):
     coloracao = {}
     for v in ordem_vertices:
@@ -79,7 +72,6 @@ def colorir_grafo_guloso(grafo, ordem_vertices):
         coloracao[v] = cor
     return coloracao
 
-# Algoritmo Força Bruta (Backtracking)
 def eh_atribuicao_valida(vertice, cor, grafo, atribuicoes_atuais):
     for vizinho in grafo[vertice]:
         if atribuicoes_atuais.get(vizinho) == cor:
@@ -118,10 +110,128 @@ def encontrar_solucao_otima_baseline(grafo_conflitos, todas_as_disciplinas, pool
     print(f"🛑  Não foi possível encontrar uma solução com até {limite_k} horários.")
     return None, -1
 
-# Visualização do grafo (igual ao dos arquivos anteriores)
+# ModernGraphStyle: tamanho dos vértices pelo grau
+def modern_vertex_sizes(grafo, nomes_disciplinas, min_vertex_size=26, max_vertex_size=46):
+    degree = {nome: len(grafo[nome]) for nome in nomes_disciplinas}
+    sum_degree = sum(degree.values())
+    n = len(nomes_disciplinas)
+    sum_of_diameters = n * ((min_vertex_size + max_vertex_size)/2)
+    diametros = {}
+    for v in nomes_disciplinas:
+        if sum_degree > 0:
+            diam = max(min((degree[v] / sum_degree) * sum_of_diameters, max_vertex_size), min_vertex_size)
+        else:
+            diam = min_vertex_size
+        diametros[v] = diam
+    return diametros
+
+# Organização automática: Kamada-Kawai + Fruchterman-Reingold
+def organizar_vertices_automaticamente(grafo, nomes_disciplinas, largura, altura, iterations_fr=600, iterations_kk=180, avoid_overlap=True):
+    nodes = list(nomes_disciplinas.keys())
+    n = len(nodes)
+    positions = {}
+    random.seed(random.uniform(-1e9, 1e9))
+
+    diametros = modern_vertex_sizes(grafo, nomes_disciplinas)
+
+    # Kamada-Kawai
+    dist = {i: {j: (0 if i==j else float('inf')) for j in nodes} for i in nodes}
+    for v in nodes:
+        for u in grafo[v]:
+            dist[v][u] = 1
+    for k in nodes:
+        for i in nodes:
+            for j in nodes:
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    L0 = min(largura, altura) / (n+1)
+    L = { (i,j): L0 * dist[i][j] if dist[i][j]<float('inf') else largura for i in nodes for j in nodes }
+    # Posição inicial centralizada (em vez de todo o canvas)
+    centro_x, centro_y = largura // 2, altura // 2
+    raio_inicial = int(0.10 * min(largura, altura))  # reduzido para concentrar mais no centro
+    for i, node in enumerate(nodes):
+        angle = 2 * math.pi * i / n + random.uniform(-0.1, 0.1)
+        r = random.uniform(-10.0, 10.0) * raio_inicial
+        positions[node] = [
+            int(centro_x + math.cos(angle) * r),
+            int(centro_y + math.sin(angle) * r)
+        ]
+    # Kamada-Kawai
+    for _ in range(iterations_kk):
+        for v in nodes:
+            dEx = dEy = 0
+            for u in nodes:
+                if v == u: continue
+                dx = positions[v][0] - positions[u][0]
+                dy = positions[v][1] - positions[u][1]
+                dist_vu = math.hypot(dx, dy) or 0.01
+                ideal = L[(v,u)]
+                k = 1.0 / (dist[v][u] ** 2) if dist[v][u] else 0.0
+                dEx += k * (dx - ideal*dx/dist_vu)
+                dEy += k * (dy - ideal*dy/dist_vu)
+            positions[v][0] -= 0.12 * dEx
+            positions[v][1] -= 0.12 * dEy
+            positions[v][0] = min(max(positions[v][0], 40), largura-80)
+            positions[v][1] = min(max(positions[v][1], 40), altura-80)
+    # Fruchterman–Reingold
+    k_fr = min(largura, altura) / (2.5 * math.sqrt(n))  # reduzido para aproximar mais
+    temp = largura / 2.0  # menos energia inicial
+    for it in range(max(iterations_fr, 1200)):
+        disp = {v: [0.0, 0.0] for v in nodes}
+        for i in range(n):
+            for j in range(i+1, n):
+                v, u = nodes[i], nodes[j]
+                dx = positions[v][0] - positions[u][0]
+                dy = positions[v][1] - positions[u][1]
+                dist_vu = math.hypot(dx, dy) or 0.01
+                force = k_fr**2 / dist_vu
+                disp[v][0] += dx / dist_vu * force
+                disp[v][1] += dy / dist_vu * force
+                disp[u][0] -= dx / dist_vu * force
+                disp[u][1] -= dy / dist_vu * force
+        for v in nodes:
+            for u in grafo[v]:
+                if v == u: continue
+                dx = positions[v][0] - positions[u][0]
+                dy = positions[v][1] - positions[u][1]
+                dist_vu = math.hypot(dx, dy) or 0.01
+                force = (dist_vu**2) / k_fr
+                disp[v][0] -= dx / dist_vu * force
+                disp[v][1] -= dy / dist_vu * force
+        for v in nodes:
+            dx, dy = disp[v]
+            length = math.hypot(dx, dy)
+            if length > 0:
+                dx = dx / length * min(length, temp)
+                dy = dy / length * min(length, temp)
+            positions[v][0] = min(max(positions[v][0] + dx, 40), largura-80)
+            positions[v][1] = min(max(positions[v][1] + dy, 40), altura-80)
+        temp *= 0.90
+        # Pós-processamento para evitar sobreposição de vértices
+        if avoid_overlap and it > max(iterations_fr, 1200)-100:
+            for i in range(n):
+                for j in range(i+1, n):
+                    v, u = nodes[i], nodes[j]
+                    dx = positions[v][0] - positions[u][0]
+                    dy = positions[v][1] - positions[u][1]
+                    dist_vu = math.hypot(dx, dy) or 0.01
+                    min_dist = (diametros[v]+diametros[u])/2 + 12
+                    if dist_vu < min_dist:
+                        # força de repulsão extra
+                        force = (min_dist - dist_vu) * 10.0
+                        if dist_vu > 0.001:
+                            positions[v][0] += (dx/dist_vu) * force
+                            positions[v][1] += (dy/dist_vu) * force
+                            positions[u][0] -= (dx/dist_vu) * force
+                            positions[u][1] -= (dy/dist_vu) * force
+                        positions[v][0] = min(max(positions[v][0], 40), largura-80)
+                        positions[v][1] = min(max(positions[v][1], 40), altura-80)
+                        positions[u][0] = min(max(positions[u][0], 40), largura-80)
+                        positions[u][1] = min(max(positions[u][1], 40), altura-80)
+    return positions
+
 def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
     import tkinter.font as tkFont
-    raio = 16
     largura = 1050
     altura = 700
     legenda_largura = 200
@@ -132,16 +242,8 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
     ]
     vertices = sorted(nomes_disciplinas, key=lambda x: nomes_disciplinas[x])
     n = len(vertices)
-    centro_x = largura // 2 - 100
-    centro_y = altura // 2
-    raio_circular = min(centro_x, centro_y) - 100
-    posicoes = {}
-    for nome in vertices:
-        idx = nomes_disciplinas[nome] - 1
-        angle = 2 * math.pi * idx / n
-        x = centro_x + int(raio_circular * math.cos(angle))
-        y = centro_y + int(raio_circular * math.sin(angle))
-        posicoes[nome] = [x, y]
+    diametros = modern_vertex_sizes(grafo, nomes_disciplinas)
+    posicoes = organizar_vertices_automaticamente(grafo, nomes_disciplinas, largura - legenda_largura, altura)
     root = tk.Tk()
     root.title("Visualização do Grafo de Conflitos")
     canvas = tk.Canvas(root, width=largura, height=altura, bg="white", highlightthickness=0)
@@ -184,10 +286,23 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
             for u in vizinhos:
                 if nomes_disciplinas[u] > nomes_disciplinas[v]:
                     x2, y2 = posicoes[u]
-                    eid = canvas.create_line(x1, y1, x2, y2, fill="#bbb", width=2, tags="aresta")
+                    dist = math.hypot(x1-x2, y1-y2)
+                    raio1 = diametros[v]/2
+                    raio2 = diametros[u]/2
+                    # Ajusta linha para começar/terminar na borda do círculo (não no centro)
+                    if dist > 1:
+                        x1a = x1 + (x2-x1) * (raio1/dist)
+                        y1a = y1 + (y2-y1) * (raio1/dist)
+                        x2a = x2 + (x1-x2) * (raio2/dist)
+                        y2a = y2 + (y1-y2) * (raio2/dist)
+                    else:
+                        x1a, y1a, x2a, y2a = x1, y1, x2, y2
+                    eid = canvas.create_line(x1a, y1a, x2a, y2a, fill="#bbb", width=2, tags="aresta")
                     arestas_ids[(v, u)] = eid
         for nome in vertices:
             x, y = posicoes[nome]
+            diam = diametros.get(nome, 32)
+            raio = diam / 2
             cor = colors[(atribuicoes.get(nome, 0) - 1) % len(colors)] if nome in atribuicoes else "#cccccc"
             nid = canvas.create_oval(x - raio, y - raio, x + raio, y + raio, fill=cor, outline="#444", width=2, tags="nodo")
             nos_ids[nome] = nid
@@ -215,6 +330,8 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
         x, y = event.x, event.y
         for nome in vertices:
             nx, ny = posicoes[nome]
+            diam = diametros.get(nome, 32)
+            raio = diam / 2
             if (nx - x) ** 2 + (ny - y) ** 2 <= raio ** 2:
                 arrastando["vertice"] = nome
                 arrastando["offset_x"] = nx - x
@@ -223,6 +340,8 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
     def on_drag(event):
         v = arrastando["vertice"]
         if v is not None:
+            diam = diametros.get(v, 32)
+            raio = diam / 2
             x = event.x + arrastando["offset_x"]
             y = event.y + arrastando["offset_y"]
             x = max(raio, min(x, largura - raio - legenda_largura - 20))
@@ -239,7 +358,6 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
     legenda_canvas.bind_all("<MouseWheel>", _on_mousewheel)
     root.mainloop()
 
-# Função para salvar a matriz de adjacência
 def salvar_matriz_adjacencia(matriz):
     linhas_formatadas = ["[" + ", ".join(map(str, linha)) + "]" for linha in matriz]
     conteudo_simples = "\n".join(linhas_formatadas)
@@ -256,7 +374,6 @@ def salvar_matriz_adjacencia(matriz):
     else:
         print("❌ Salvamento da matriz cancelado.")
 
-# Função para salvar a grade de horários
 def salvar_grade_horarios(grade_final):
     nome_arquivo_saida = filedialog.asksaveasfilename(
         title="Salvar tabela de horários como...",
@@ -272,12 +389,10 @@ def salvar_grade_horarios(grade_final):
             json.dump(grade_final, f, ensure_ascii=False, indent=4)
         print(f"✅  Tabela de horários salva em '{nome_arquivo_saida}'.")
 
-# Pool de horários reais
-dias_com_folga = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
-slots_de_horario_diarios = ["08:00–10:00", "10:00–12:00", "14:00–16:00", "16:00–18:00"]
-pool_de_horarios_reais = [f"{dia} {slot}" for dia in dias_com_folga for slot in slots_de_horario_diarios]
+dias_disponiveis = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
+horarios_disponiveis = ["08:00–10:00", "10:00–12:00", "14:00–16:00", "16:00–18:00"]
+dias_horarios_disponiveis = [f"{dia} {slot}" for dia in dias_disponiveis for slot in horarios_disponiveis]
 
-# Caixa de seleção para escolha do algoritmo
 def selecionar_algoritmo():
     root = tk.Tk()
     root.title("Algoritmo - Alocação de Disciplinas")
@@ -307,14 +422,11 @@ def main():
         messagebox.showerror("Erro", "Nenhuma opção foi selecionada. Encerrando o programa.")
         exit()
     algoritmo = algoritmo.strip().lower()
-
     dados_disciplinas_json = carregar_dados_disciplinas()
     disciplinas_ordenadas = [disc["nome"].strip() for disc in dados_disciplinas_json]
     indices_disciplinas = {nome: i+1 for i, nome in enumerate(disciplinas_ordenadas)}
-
     grafo_conflitos = construir_grafo_conflitos(dados_disciplinas_json)
     matriz = criar_matriz_adjacencia(grafo_conflitos, disciplinas_ordenadas)
-
     if algoritmo == "guloso":
         print(f"ℹ️  Iniciando alocação gulosa para {len(dados_disciplinas_json)} disciplinas...")
         inicio_execucao = timeit.default_timer()
@@ -328,7 +440,7 @@ def main():
         for info_disciplina in dados_disciplinas_json:
             nome = info_disciplina["nome"].strip()
             cor = coloracao_gulosa.get(nome, 0)
-            horario = pool_de_horarios_reais[cor-1] if cor > 0 and cor <= len(pool_de_horarios_reais) else "ERRO"
+            horario = dias_horarios_disponiveis[cor-1] if cor > 0 and cor <= len(dias_horarios_disponiveis) else "ERRO"
             grade_final.append({
                 "nome": nome,
                 "professor": info_disciplina["professor"].strip(),
@@ -344,7 +456,7 @@ def main():
         horarios_otimos, numero_cromatico = encontrar_solucao_otima_baseline(
             grafo_conflitos,
             disciplinas_ordenadas,
-            pool_de_horarios_reais
+            dias_horarios_disponiveis
         )
         fim_execucao = timeit.default_timer()
         print(f"⏰  Tempo total de execução (força bruta): {fim_execucao - inicio_execucao:.6f} segundos.")
@@ -364,7 +476,6 @@ def main():
         else:
             print("⚠️  Não foi possível gerar a grade horária com solução ótima.")
         salvar_matriz_adjacencia(matriz)
-        # Visualização gulosa para o grafo
         coloracao_gulosa = colorir_grafo_guloso(grafo_conflitos, disciplinas_ordenadas)
         mostrar_grafo_colorizado(grafo_conflitos, coloracao_gulosa, indices_disciplinas)
     else:
