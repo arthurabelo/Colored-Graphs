@@ -1,0 +1,37 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 1,
+        "professor": "Daniela Gomes"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 1,
+        "professor": "Eduardo Martins"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 1,
+        "professor": "Fernanda Alves"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 1,
+        "professor": "Gustavo Pereira"
+    }
+]

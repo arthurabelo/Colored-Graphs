@@ -1,0 +1,127 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "Ana Costa"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Bruno Fernandes"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Carla Santos"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 1,
+        "professor": "Davi Oliveira"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 1,
+        "professor": "Elisa Rodrigues"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 1,
+        "professor": "Fábio Almeida"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 1,
+        "professor": "Laura Pereira"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 2,
+        "professor": "Marcos Silva"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 2,
+        "professor": "Ana Costa"
+    },
+    {
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO",
+        "periodo": 2,
+        "professor": "Bruno Fernandes"
+    },
+    {
+        "nome": "CIRCUITOS DIGITAIS",
+        "periodo": 2,
+        "professor": "Carla Santos"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL II",
+        "periodo": 2,
+        "professor": "Davi Oliveira"
+    },
+    {
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 2,
+        "professor": "Elisa Rodrigues"
+    },
+    {
+        "nome": "PROBABILIDADE E ESTATÍSTICA",
+        "periodo": 3,
+        "professor": "Fábio Almeida"
+    },
+    {
+        "nome": "BANCO DE DADOS",
+        "periodo": 3,
+        "professor": "Laura Pereira"
+    },
+    {
+        "nome": "INTERFACE HUMANO COMPUTADOR",
+        "periodo": 3,
+        "professor": "Marcos Silva"
+    },
+    {
+        "nome": "TEORIA E APLICAÇÕES EM GRAFOS",
+        "periodo": 3,
+        "professor": "Ana Costa"
+    },
+    {
+        "nome": "ARQUITETURA DE COMPUTADORES",
+        "periodo": 3,
+        "professor": "Bruno Fernandes"
+    },
+    {
+        "nome": "ÁLGEBRA LINEAR",
+        "periodo": 3,
+        "professor": "Carla Santos"
+    },
+    {
+        "nome": "COMPUTAÇÃO GRÁFICA",
+        "periodo": 4,
+        "professor": "Davi Oliveira"
+    },
+    {
+        "nome": "SISTEMAS OPERACIONAIS",
+        "periodo": 4,
+        "professor": "Elisa Rodrigues"
+    },
+    {
+        "nome": "PROGRAMAÇÃO LINEAR",
+        "periodo": 4,
+        "professor": "Fábio Almeida"
+    },
+    {
+        "nome": "REDES DE COMPUTADORES",
+        "periodo": 4,
+        "professor": "Laura Pereira"
+    },
+    {
+        "nome": "PROJETO E ANÁLISE DE ALGORITMOS",
+        "periodo": 4,
+        "professor": "Marcos Silva"
+    },
+    {
+        "nome": "PROCESSAMENTO DIGITAL DE IMAGENS",
+        "periodo": 4,
+        "professor": "Ana Costa"
+    }
+]

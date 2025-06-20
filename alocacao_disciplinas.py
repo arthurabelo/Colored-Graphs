@@ -8,6 +8,9 @@ import time
 import timeit
 import random
 
+from layout_grafo import modern_vertex_sizes, organizar_vertices_automaticamente
+from tabela_horarios import gerar_tabelas_por_periodo
+
 # Função para carregar o arquivo JSON de entrada
 def carregar_dados_disciplinas():
     tk.Tk().withdraw() # Esconde a janela do Tkinter
@@ -62,6 +65,7 @@ def criar_matriz_adjacencia(grafo_conflitos, disciplinas_ordenadas):
                 matriz[i][j] = 1
     return matriz
 
+# MÉTODO GULOSO
 def colorir_grafo_guloso(grafo, ordem_vertices):
     coloracao = {}
     for v in ordem_vertices:
@@ -72,6 +76,39 @@ def colorir_grafo_guloso(grafo, ordem_vertices):
         coloracao[v] = cor
     return coloracao
 
+# HEURÍSTICA DSATUR
+
+def colorir_grafo_dsatur(grafo, ordem_vertices):
+    coloracao = {}
+    saturacao = {v: 0 for v in ordem_vertices}
+    graus = {v: len(grafo[v]) for v in ordem_vertices}
+    nao_colorados = set(ordem_vertices)
+    while nao_colorados:
+        # Seleciona vértice de maior saturação (maior número de cores diferentes nos vizinhos)
+        max_satur = -1
+        candidatos = []
+        for v in nao_colorados:
+            cores_vizinhos = set(coloracao.get(u) for u in grafo[v] if u in coloracao)
+            sat = len(cores_vizinhos)
+            if sat > max_satur:
+                max_satur = sat
+                candidatos = [v]
+            elif sat == max_satur:
+                candidatos.append(v)
+        # Se empate, escolhe o de maior grau
+        if len(candidatos) > 1:
+            v_escolhido = max(candidatos, key=lambda v: graus[v])
+        else:
+            v_escolhido = candidatos[0]
+        cores_usadas = set(coloracao.get(u) for u in grafo[v_escolhido] if u in coloracao)
+        cor = 1
+        while cor in cores_usadas:
+            cor += 1
+        coloracao[v_escolhido] = cor
+        nao_colorados.remove(v_escolhido)
+    return coloracao
+
+# FORÇA BRUTA / BACKTRACKING - BASELINE
 def eh_atribuicao_valida(vertice, cor, grafo, atribuicoes_atuais):
     for vizinho in grafo[vertice]:
         if atribuicoes_atuais.get(vizinho) == cor:
@@ -103,132 +140,12 @@ def encontrar_solucao_otima_baseline(grafo_conflitos, todas_as_disciplinas, pool
             print(f"✅  Solução ótima encontrada! Número mínimo de horários: {k}")
             horarios_finais = {}
             for disciplina, cor_num in atribuicoes_numericas.items():
-                horarios_finais[disciplina] = pool_de_horarios[cor_num - 1]
+                horarios_finais[disciplina] = cor_num
             total_conflitos = sum(len(vizinhos) for vizinhos in grafo_conflitos.values()) // 2
             print(f"🔎 Quantidade de conflitos encontrados: {total_conflitos}")
             return horarios_finais, k
     print(f"🛑  Não foi possível encontrar uma solução com até {limite_k} horários.")
-    return None, -1
-
-# ModernGraphStyle: tamanho dos vértices pelo grau
-def modern_vertex_sizes(grafo, nomes_disciplinas, min_vertex_size=26, max_vertex_size=46):
-    degree = {nome: len(grafo[nome]) for nome in nomes_disciplinas}
-    sum_degree = sum(degree.values())
-    n = len(nomes_disciplinas)
-    sum_of_diameters = n * ((min_vertex_size + max_vertex_size)/2)
-    diametros = {}
-    for v in nomes_disciplinas:
-        if sum_degree > 0:
-            diam = max(min((degree[v] / sum_degree) * sum_of_diameters, max_vertex_size), min_vertex_size)
-        else:
-            diam = min_vertex_size
-        diametros[v] = diam
-    return diametros
-
-# Organização automática: Kamada-Kawai + Fruchterman-Reingold
-def organizar_vertices_automaticamente(grafo, nomes_disciplinas, largura, altura, iterations_fr=600, iterations_kk=180, avoid_overlap=True):
-    nodes = list(nomes_disciplinas.keys())
-    n = len(nodes)
-    positions = {}
-    random.seed(random.uniform(-1e9, 1e9))
-
-    diametros = modern_vertex_sizes(grafo, nomes_disciplinas)
-
-    # Kamada-Kawai
-    dist = {i: {j: (0 if i==j else float('inf')) for j in nodes} for i in nodes}
-    for v in nodes:
-        for u in grafo[v]:
-            dist[v][u] = 1
-    for k in nodes:
-        for i in nodes:
-            for j in nodes:
-                if dist[i][j] > dist[i][k] + dist[k][j]:
-                    dist[i][j] = dist[i][k] + dist[k][j]
-    L0 = min(largura, altura) / (n+1)
-    L = { (i,j): L0 * dist[i][j] if dist[i][j]<float('inf') else largura for i in nodes for j in nodes }
-    # Posição inicial centralizada (em vez de todo o canvas)
-    centro_x, centro_y = largura // 2, altura // 2
-    raio_inicial = int(0.10 * min(largura, altura))  # reduzido para concentrar mais no centro
-    for i, node in enumerate(nodes):
-        angle = 2 * math.pi * i / n + random.uniform(-0.1, 0.1)
-        r = random.uniform(-10.0, 10.0) * raio_inicial
-        positions[node] = [
-            int(centro_x + math.cos(angle) * r),
-            int(centro_y + math.sin(angle) * r)
-        ]
-    # Kamada-Kawai
-    for _ in range(iterations_kk):
-        for v in nodes:
-            dEx = dEy = 0
-            for u in nodes:
-                if v == u: continue
-                dx = positions[v][0] - positions[u][0]
-                dy = positions[v][1] - positions[u][1]
-                dist_vu = math.hypot(dx, dy) or 0.01
-                ideal = L[(v,u)]
-                k = 1.0 / (dist[v][u] ** 2) if dist[v][u] else 0.0
-                dEx += k * (dx - ideal*dx/dist_vu)
-                dEy += k * (dy - ideal*dy/dist_vu)
-            positions[v][0] -= 0.12 * dEx
-            positions[v][1] -= 0.12 * dEy
-            positions[v][0] = min(max(positions[v][0], 40), largura-80)
-            positions[v][1] = min(max(positions[v][1], 40), altura-80)
-    # Fruchterman–Reingold
-    k_fr = min(largura, altura) / (2.5 * math.sqrt(n))  # reduzido para aproximar mais
-    temp = largura / 2.0  # menos energia inicial
-    for it in range(max(iterations_fr, 1200)):
-        disp = {v: [0.0, 0.0] for v in nodes}
-        for i in range(n):
-            for j in range(i+1, n):
-                v, u = nodes[i], nodes[j]
-                dx = positions[v][0] - positions[u][0]
-                dy = positions[v][1] - positions[u][1]
-                dist_vu = math.hypot(dx, dy) or 0.01
-                force = k_fr**2 / dist_vu
-                disp[v][0] += dx / dist_vu * force
-                disp[v][1] += dy / dist_vu * force
-                disp[u][0] -= dx / dist_vu * force
-                disp[u][1] -= dy / dist_vu * force
-        for v in nodes:
-            for u in grafo[v]:
-                if v == u: continue
-                dx = positions[v][0] - positions[u][0]
-                dy = positions[v][1] - positions[u][1]
-                dist_vu = math.hypot(dx, dy) or 0.01
-                force = (dist_vu**2) / k_fr
-                disp[v][0] -= dx / dist_vu * force
-                disp[v][1] -= dy / dist_vu * force
-        for v in nodes:
-            dx, dy = disp[v]
-            length = math.hypot(dx, dy)
-            if length > 0:
-                dx = dx / length * min(length, temp)
-                dy = dy / length * min(length, temp)
-            positions[v][0] = min(max(positions[v][0] + dx, 40), largura-80)
-            positions[v][1] = min(max(positions[v][1] + dy, 40), altura-80)
-        temp *= 0.90
-        # Pós-processamento para evitar sobreposição de vértices
-        if avoid_overlap and it > max(iterations_fr, 1200)-100:
-            for i in range(n):
-                for j in range(i+1, n):
-                    v, u = nodes[i], nodes[j]
-                    dx = positions[v][0] - positions[u][0]
-                    dy = positions[v][1] - positions[u][1]
-                    dist_vu = math.hypot(dx, dy) or 0.01
-                    min_dist = (diametros[v]+diametros[u])/2 + 12
-                    if dist_vu < min_dist:
-                        # força de repulsão extra
-                        force = (min_dist - dist_vu) * 10.0
-                        if dist_vu > 0.001:
-                            positions[v][0] += (dx/dist_vu) * force
-                            positions[v][1] += (dy/dist_vu) * force
-                            positions[u][0] -= (dx/dist_vu) * force
-                            positions[u][1] -= (dy/dist_vu) * force
-                        positions[v][0] = min(max(positions[v][0], 40), largura-80)
-                        positions[v][1] = min(max(positions[v][1], 40), altura-80)
-                        positions[u][0] = min(max(positions[u][0], 40), largura-80)
-                        positions[u][1] = min(max(positions[u][1], 40), altura-80)
-    return positions
+    exit(), -1
 
 def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
     import tkinter.font as tkFont
@@ -237,8 +154,8 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
     legenda_largura = 200
     legenda_altura = 420
     colors = [
-        "#FF0000", "#008000", "#0000FF", "#FFFF00", "#FFA500",
-        "#580658", "#00FFFF", "#F54FA2", "#A52A2A", "#00FF00"
+        "#FF0000", "#008000", "#0000FF", "#FF4800", "#F54FA2",
+        "#FFA500", "#00FFFF", "#19FC24", "#A52A2A", "#580658"
     ]
     vertices = sorted(nomes_disciplinas, key=lambda x: nomes_disciplinas[x])
     n = len(vertices)
@@ -344,7 +261,7 @@ def mostrar_grafo_colorizado(grafo, atribuicoes, nomes_disciplinas):
             raio = diam / 2
             x = event.x + arrastando["offset_x"]
             y = event.y + arrastando["offset_y"]
-            x = max(raio, min(x, largura - raio - legenda_largura - 20))
+            x = max(raio, min(x, largura - legenda_largura - raio))
             y = max(raio, min(y, altura - raio))
             posicoes[v] = [x, y]
             desenhar_tudo()
@@ -400,12 +317,12 @@ def selecionar_algoritmo():
     root.resizable(False, True)
     root.eval('tk::PlaceWindow . center')
     var = tk.StringVar()
-    var.set("forcabruta")
+    var.set("")
     frame = tk.Frame(root)
     frame.pack(pady=20)
     tk.Label(frame, text="Selecione o algoritmo:", font=("Arial", 11)).pack(pady=(0, 10))
     combo = ttk.Combobox(frame, textvariable=var, state="readonly", font=("Arial", 11), width=22)
-    combo['values'] = ("forcabruta", "guloso")
+    combo['values'] = ("", "forcabruta", "guloso", "dsatur")
     combo.pack()
     def confirmar():
         root.quit()
@@ -413,7 +330,10 @@ def selecionar_algoritmo():
     btn.pack(pady=10)
     root.mainloop()
     algoritmo = var.get()
-    root.destroy()
+    try:
+        root.destroy()
+    except tk.TclError:
+        pass
     return algoritmo
 
 def main():
@@ -449,9 +369,11 @@ def main():
             })
         salvar_grade_horarios(grade_final)
         salvar_matriz_adjacencia(matriz)
+        gerar_tabelas_por_periodo(grade_final, 'tabela_horarios.xlsx')
+        print('Tabelas de horários por período geradas em tabela_horarios.xlsx')
         mostrar_grafo_colorizado(grafo_conflitos, coloracao_gulosa, indices_disciplinas)
     elif algoritmo == "forcabruta":
-        print(f"ℹ️  Iniciando busca por força bruta para {len(dados_disciplinas_json)} disciplinas...")
+        print(f"ℹ️  Iniciando alocação por força bruta para {len(dados_disciplinas_json)} disciplinas...")
         inicio_execucao = timeit.default_timer()
         horarios_otimos, numero_cromatico = encontrar_solucao_otima_baseline(
             grafo_conflitos,
@@ -465,7 +387,9 @@ def main():
             grade_final_otima = []
             for info_disciplina in dados_disciplinas_json:
                 nome = info_disciplina["nome"].strip()
-                horario = horarios_otimos.get(nome, "ERRO")
+                cor = horarios_otimos.get(nome, 0)
+                # Converte o índice para o nome do horário, igual ao guloso
+                horario = dias_horarios_disponiveis[cor-1] if cor > 0 and cor <= len(dias_horarios_disponiveis) else "ERRO"
                 grade_final_otima.append({
                     "nome": nome,
                     "professor": info_disciplina["professor"].strip(),
@@ -473,14 +397,42 @@ def main():
                     "horario": horario
                 })
             salvar_grade_horarios(grade_final_otima)
+            salvar_matriz_adjacencia(matriz)
+            gerar_tabelas_por_periodo(grade_final_otima, 'tabela_horarios.xlsx')
+            print('Tabelas de horários por período geradas em tabela_horarios.xlsx')
+            mostrar_grafo_colorizado(grafo_conflitos, horarios_otimos, indices_disciplinas)
         else:
             print("⚠️  Não foi possível gerar a grade horária com solução ótima.")
+            salvar_matriz_adjacencia(matriz)
+    elif algoritmo == "dsatur":
+        print(f"ℹ️  Iniciando alocação DSATUR para {len(dados_disciplinas_json)} disciplinas...")
+        inicio_execucao = timeit.default_timer()
+        coloracao_dsatur = colorir_grafo_dsatur(grafo_conflitos, disciplinas_ordenadas)
+        fim_execucao = timeit.default_timer()
+        print(f"✅  Alocação DSATUR concluída! Número de horários utilizados: {max(coloracao_dsatur.values()) if coloracao_dsatur else 0}")
+        total_conflitos = sum(len(vizinhos) for vizinhos in grafo_conflitos.values()) // 2
+        print(f"🔎 Quantidade de conflitos encontrados: {total_conflitos}")
+        print(f"⏰  Tempo total de execução (DSATUR): {fim_execucao - inicio_execucao:.6f} segundos.")
+        grade_final = []
+        for info_disciplina in dados_disciplinas_json:
+            nome = info_disciplina["nome"].strip()
+            cor = coloracao_dsatur.get(nome, 0)
+            horario = dias_horarios_disponiveis[cor-1] if cor > 0 and cor <= len(dias_horarios_disponiveis) else "ERRO"
+            grade_final.append({
+                "nome": nome,
+                "professor": info_disciplina["professor"].strip(),
+                "periodo": info_disciplina["periodo"],
+                "horario": horario
+            })
+        salvar_grade_horarios(grade_final)
         salvar_matriz_adjacencia(matriz)
-        coloracao_gulosa = colorir_grafo_guloso(grafo_conflitos, disciplinas_ordenadas)
-        mostrar_grafo_colorizado(grafo_conflitos, coloracao_gulosa, indices_disciplinas)
+        gerar_tabelas_por_periodo(grade_final, 'tabela_horarios.xlsx')
+        print('Tabelas de horários por período geradas em tabela_horarios.xlsx')
+        mostrar_grafo_colorizado(grafo_conflitos, coloracao_dsatur, indices_disciplinas)
     else:
         messagebox.showerror("Erro", "Opção inválida. Encerrando o programa.")
         exit()
 
 if __name__ == "__main__":
     main()
+    exit()

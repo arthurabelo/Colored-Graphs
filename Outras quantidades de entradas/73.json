@@ -1,0 +1,367 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "Ana Silva"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Bruno Costa"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Carla Oliveira"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 1,
+        "professor": "Daniel Santos"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 1,
+        "professor": "Eduarda Pereira"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 1,
+        "professor": "Felipe Rodrigues"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 1,
+        "professor": "Gabriela Almeida"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 2,
+        "professor": "Hugo Lima"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 2,
+        "professor": "Isabela Ferreira"
+    },
+    {
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO",
+        "periodo": 2,
+        "professor": "João Gomes"
+    },
+    {
+        "nome": "CIRCUITOS DIGITAIS",
+        "periodo": 2,
+        "professor": "Larissa Martins"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL II",
+        "periodo": 2,
+        "professor": "Lucas Rocha"
+    },
+    {
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 2,
+        "professor": "Mariana Alves"
+    },
+    {
+        "nome": "PROBABILIDADE E ESTATÍSTICA",
+        "periodo": 3,
+        "professor": "Nelson Ribeiro"
+    },
+    {
+        "nome": "BANCO DE DADOS",
+        "periodo": 3,
+        "professor": "Olivia Carvalho"
+    },
+    {
+        "nome": "INTERFACE HUMANO COMPUTADOR",
+        "periodo": 3,
+        "professor": "Pedro Barros"
+    },
+    {
+        "nome": "TEORIA E APLICAÇÕES EM GRAFOS",
+        "periodo": 3,
+        "professor": "Renata Dias"
+    },
+    {
+        "nome": "ARQUITETURA DE COMPUTADORES",
+        "periodo": 3,
+        "professor": "Samuel Nunes"
+    },
+    {
+        "nome": "ÁLGEBRA LINEAR",
+        "periodo": 3,
+        "professor": "Sofia Mendes"
+    },
+    {
+        "nome": "COMPUTAÇÃO GRÁFICA",
+        "periodo": 4,
+        "professor": "Thiago Castro"
+    },
+    {
+        "nome": "SISTEMAS OPERACIONAIS",
+        "periodo": 4,
+        "professor": "Vanessa Lopes"
+    },
+    {
+        "nome": "PROGRAMAÇÃO LINEAR",
+        "periodo": 4,
+        "professor": "Ana Silva"
+    },
+    {
+        "nome": "REDES DE COMPUTADORES",
+        "periodo": 4,
+        "professor": "Bruno Costa"
+    },
+    {
+        "nome": "PROJETO E ANÁLISE DE ALGORITMOS",
+        "periodo": 4,
+        "professor": "Carla Oliveira"
+    },
+    {
+        "nome": "PROCESSAMENTO DIGITAL DE IMAGENS",
+        "periodo": 4,
+        "professor": "Daniel Santos"
+    },
+    {
+        "nome": "MÉTODOS COMPUTACIONAIS EM ESTATÍSTICA",
+        "periodo": 5,
+        "professor": "Eduarda Pereira"
+    },
+    {
+        "nome": "EMPREENDEDORISMO",
+        "periodo": 5,
+        "professor": "Felipe Rodrigues"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS AVANÇADAS",
+        "periodo": 5,
+        "professor": "Gabriela Almeida"
+    },
+    {
+        "nome": "PRÁTICA DESPORTIVA I",
+        "periodo": 5,
+        "professor": "Hugo Lima"
+    },
+    {
+        "nome": "RELAÇÕES ÉTNICO-RACIAIS, GÊNERO E DIVERSIDADE",
+        "periodo": 5,
+        "professor": "Isabela Ferreira"
+    },
+    {
+        "nome": "ELETRICIDADE E MAGNETISMO",
+        "periodo": 5,
+        "professor": "João Gomes"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL III",
+        "periodo": 5,
+        "professor": "Larissa Martins"
+    },
+    {
+        "nome": "MÉTODOS NUMÉRICOS",
+        "periodo": 5,
+        "professor": "Lucas Rocha"
+    },
+    {
+        "nome": "LIBRAS- LINGUA BRASILEIRA DE SINAIS",
+        "periodo": 5,
+        "professor": "Mariana Alves"
+    },
+    {
+        "nome": "TEORIA DA COMPUTAÇÃO",
+        "periodo": 5,
+        "professor": "Nelson Ribeiro"
+    },
+    {
+        "nome": "SISTEMAS DISTRIBUÍDOS",
+        "periodo": 5,
+        "professor": "Olivia Carvalho"
+    },
+    {
+        "nome": "ENGENHARIA DE SOFTWARE I",
+        "periodo": 5,
+        "professor": "Pedro Barros"
+    },
+    {
+        "nome": "SEGURANÇA EM SISTEMAS",
+        "periodo": 5,
+        "professor": "Renata Dias"
+    },
+    {
+        "nome": "INTELIGÊNCIA ARTIFICIAL",
+        "periodo": 5,
+        "professor": "Samuel Nunes"
+    },
+    {
+        "nome": "COMPUTAÇÃO PARALELA",
+        "periodo": 6,
+        "professor": "Sofia Mendes"
+    },
+    {
+        "nome": "FLUXOS EM REDES",
+        "periodo": 6,
+        "professor": "Thiago Castro"
+    },
+    {
+        "nome": "MODELAGEM E SIMULAÇÃO DE SISTEMAS",
+        "periodo": 6,
+        "professor": "Vanessa Lopes"
+    },
+    {
+        "nome": "REDES NEURAIS ARTIFICIAIS",
+        "periodo": 6,
+        "professor": "Ana Silva"
+    },
+    {
+        "nome": "SISTEMAS EMBARCADOS",
+        "periodo": 6,
+        "professor": "Bruno Costa"
+    },
+    {
+        "nome": "COMPILADORES",
+        "periodo": 6,
+        "professor": "Carla Oliveira"
+    },
+    {
+        "nome": "LINGUAGENS DE PROGRAMAÇÃO",
+        "periodo": 6,
+        "professor": "Daniel Santos"
+    },
+    {
+        "nome": "ENGENHARIA DE SOFTWARE II",
+        "periodo": 6,
+        "professor": "Eduarda Pereira"
+    },
+    {
+        "nome": "BANCOS DE DADOS RELACIONAIS",
+        "periodo": 6,
+        "professor": "Felipe Rodrigues"
+    },
+    {
+        "nome": "BANCOS DE DADOS DISTRIBUÍDOS E PARALELOS",
+        "periodo": 7,
+        "professor": "Gabriela Almeida"
+    },
+    {
+        "nome": "ENGENHARIA DE SOFTWARE EXPERIMENTAL",
+        "periodo": 7,
+        "professor": "Hugo Lima"
+    },
+    {
+        "nome": "LABORATÓRIO DE COMPILADORES",
+        "periodo": 7,
+        "professor": "Isabela Ferreira"
+    },
+    {
+        "nome": "PROCESSAMENTO DE LINGUAGEM NATURAL",
+        "periodo": 7,
+        "professor": "João Gomes"
+    },
+    {
+        "nome": "PROGRAMAÇÃO INTEIRA",
+        "periodo": 7,
+        "professor": "Larissa Martins"
+    },
+    {
+        "nome": "PROGRAMAÇÃO NÃO LINEAR",
+        "periodo": 7,
+        "professor": "Lucas Rocha"
+    },
+    {
+        "nome": "REDES DE COMUNICAÇÃO SEM FIO",
+        "periodo": 7,
+        "professor": "Mariana Alves"
+    },
+    {
+        "nome": "SISTEMAS FUZZY",
+        "periodo": 7,
+        "professor": "Nelson Ribeiro"
+    },
+    {
+        "nome": "TESTE DE SOFTWARE",
+        "periodo": 7,
+        "professor": "Olivia Carvalho"
+    },
+    {
+        "nome": "TÓPICOS EM BIOINFORMÁTICA",
+        "periodo": 7,
+        "professor": "Pedro Barros"
+    },
+    {
+        "nome": "EDUCAÇÃO AMBIENTAL, TECNOLOGIA E SOCIEDADE",
+        "periodo": 7,
+        "professor": "Renata Dias"
+    },
+    {
+        "nome": "TRABALHO DE CONCLUSÃO DE CURSO I - TCC I",
+        "periodo": 7,
+        "professor": "Samuel Nunes"
+    },
+    {
+        "nome": "ESTÁGIO SUPERVISIONADO",
+        "periodo": 7,
+        "professor": "Sofia Mendes"
+    },
+    {
+        "nome": "PROGRAMAÇÃO FUNCIONAL",
+        "periodo": 7,
+        "professor": "Thiago Castro"
+    },
+    {
+        "nome": "TÓPICOS EM ARQUITETURA DE COMPUTADORES",
+        "periodo": 8,
+        "professor": "Vanessa Lopes"
+    },
+    {
+        "nome": "TÓPICOS EM BANCO DE DADOS",
+        "periodo": 8,
+        "professor": "Ana Silva"
+    },
+    {
+        "nome": "TÓPICOS EM COMPUTAÇÃO APLICADA",
+        "periodo": 8,
+        "professor": "Bruno Costa"
+    },
+    {
+        "nome": "TÓPICOS EM ENGENHARIA DE SOFTWARE",
+        "periodo": 8,
+        "professor": "Carla Oliveira"
+    },
+    {
+        "nome": "TÓPICOS EM INTELIGÊNCIA ARTIFICIAL",
+        "periodo": 8,
+        "professor": "Daniel Santos"
+    },
+    {
+        "nome": "TÓPICOS EM PROGRAMAÇÃO",
+        "periodo": 8,
+        "professor": "Eduarda Pereira"
+    },
+    {
+        "nome": "TÓPICOS EM REDES DE COMPUTADORES",
+        "periodo": 8,
+        "professor": "Felipe Rodrigues"
+    },
+    {
+        "nome": "TÓPICOS EM SEGURANÇA EM SISTEMAS",
+        "periodo": 8,
+        "professor": "Gabriela Almeida"
+    },
+    {
+        "nome": "TÓPICOS EM SISTEMAS COMPUTACIONAIS",
+        "periodo": 8,
+        "professor": "Hugo Lima"
+    },
+    {
+        "nome": "TÓPICOS EM SISTEMAS OPERACIONAIS",
+        "periodo": 8,
+        "professor": "Isabela Ferreira"
+    },
+    {
+        "nome": "VISÃO COMPUTACIONAL",
+        "periodo": 8,
+        "professor": "João Gomes"
+    }
+]

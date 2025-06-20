@@ -1,0 +1,102 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "André Mendes"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Beatriz Castro"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Carlos Rocha"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 1,
+        "professor": "Daniela Ribeiro"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 1,
+        "professor": "Eduardo Lima"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 1,
+        "professor": "Fernanda Barros"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 1,
+        "professor": "André Mendes"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 2,
+        "professor": "Beatriz Castro"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 2,
+        "professor": "Carlos Rocha"
+    },
+    {
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO",
+        "periodo": 2,
+        "professor": "Daniela Ribeiro"
+    },
+    {
+        "nome": "CIRCUITOS DIGITAIS",
+        "periodo": 2,
+        "professor": "Eduardo Lima"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL II",
+        "periodo": 2,
+        "professor": "Fernanda Barros"
+    },
+    {
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 2,
+        "professor": "André Mendes"
+    },
+    {
+        "nome": "PROBABILIDADE E ESTATÍSTICA",
+        "periodo": 3,
+        "professor": "Beatriz Castro"
+    },
+    {
+        "nome": "BANCO DE DADOS",
+        "periodo": 3,
+        "professor": "Carlos Rocha"
+    },
+    {
+        "nome": "INTERFACE HUMANO COMPUTADOR",
+        "periodo": 3,
+        "professor": "Daniela Ribeiro"
+    },
+    {
+        "nome": "TEORIA E APLICAÇÕES EM GRAFOS",
+        "periodo": 3,
+        "professor": "Eduardo Lima"
+    },
+    {
+        "nome": "ARQUITETURA DE COMPUTADORES",
+        "periodo": 3,
+        "professor": "Fernanda Barros"
+    },
+    {
+        "nome": "ÁLGEBRA LINEAR",
+        "periodo": 3,
+        "professor": "André Mendes"
+    },
+    {
+        "nome": "COMPUTAÇÃO GRÁFICA",
+        "periodo": 4,
+        "professor": "Beatriz Castro"
+    }
+]

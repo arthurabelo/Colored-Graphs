@@ -1,0 +1,44 @@
+[
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "professor": "Gustavo Pereira",
+        "periodo": 1,
+        "horario": "Seg 08:00–10:00"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "professor": "Daniela Gomes",
+        "periodo": 1,
+        "horario": "Seg 10:00–12:00"
+    },
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "professor": "André Santos",
+        "periodo": 1,
+        "horario": "Seg 14:00–16:00"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "professor": "Beatriz Lima",
+        "periodo": 1,
+        "horario": "Seg 16:00–18:00"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "professor": "Fernanda Alves",
+        "periodo": 1,
+        "horario": "Ter 08:00–10:00"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "professor": "Eduardo Martins",
+        "periodo": 1,
+        "horario": "Ter 10:00–12:00"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "professor": "Caio Ribeiro",
+        "periodo": 1,
+        "horario": "Ter 14:00–16:00"
+    }
+]

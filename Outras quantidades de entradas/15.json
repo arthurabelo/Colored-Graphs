@@ -1,0 +1,77 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 1,
+        "professor": "Daniela Gomes"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 1,
+        "professor": "Eduardo Martins"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 1,
+        "professor": "Fernanda Alves"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 1,
+        "professor": "Gustavo Pereira"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 2,
+        "professor": "Helena Souza"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 2,
+        "professor": "Igor Carvalho"
+    },
+    {
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO",
+        "periodo": 2,
+        "professor": "Julia Rocha"
+    },
+    {
+        "nome": "CIRCUITOS DIGITAIS",
+        "periodo": 2,
+        "professor": "Leonardo Ferreira"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL II",
+        "periodo": 2,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 2,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "PROBABILIDADE E ESTATÍSTICA",
+        "periodo": 3,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "BANCO DE DADOS",
+        "periodo": 3,
+        "professor": "Daniela Gomes"
+    }
+]

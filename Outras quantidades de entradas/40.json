@@ -1,0 +1,202 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 1,
+        "professor": "Daniela Gomes"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 1,
+        "professor": "Eduardo Martins"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 1,
+        "professor": "Fernanda Alves"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 1,
+        "professor": "Gustavo Pereira"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 2,
+        "professor": "Helena Souza"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 2,
+        "professor": "Igor Carvalho"
+    },
+    {
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO",
+        "periodo": 2,
+        "professor": "Julia Rocha"
+    },
+    {
+        "nome": "CIRCUITOS DIGITAIS",
+        "periodo": 2,
+        "professor": "Leonardo Ferreira"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL II",
+        "periodo": 2,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 2,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "PROBABILIDADE E ESTATÍSTICA",
+        "periodo": 3,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "BANCO DE DADOS",
+        "periodo": 3,
+        "professor": "Daniela Gomes"
+    },
+    {
+        "nome": "INTERFACE HUMANO COMPUTADOR",
+        "periodo": 3,
+        "professor": "Eduardo Martins"
+    },
+    {
+        "nome": "TEORIA E APLICAÇÕES EM GRAFOS",
+        "periodo": 3,
+        "professor": "Fernanda Alves"
+    },
+    {
+        "nome": "ARQUITETURA DE COMPUTADORES",
+        "periodo": 3,
+        "professor": "Gustavo Pereira"
+    },
+    {
+        "nome": "ÁLGEBRA LINEAR",
+        "periodo": 3,
+        "professor": "Helena Souza"
+    },
+    {
+        "nome": "COMPUTAÇÃO GRÁFICA",
+        "periodo": 4,
+        "professor": "Igor Carvalho"
+    },
+    {
+        "nome": "SISTEMAS OPERACIONAIS",
+        "periodo": 4,
+        "professor": "Julia Rocha"
+    },
+    {
+        "nome": "PROGRAMAÇÃO LINEAR",
+        "periodo": 4,
+        "professor": "Leonardo Ferreira"
+    },
+    {
+        "nome": "REDES DE COMPUTADORES",
+        "periodo": 4,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "PROJETO E ANÁLISE DE ALGORITMOS",
+        "periodo": 4,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "PROCESSAMENTO DIGITAL DE IMAGENS",
+        "periodo": 4,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "MÉTODOS COMPUTACIONAIS EM ESTATÍSTICA",
+        "periodo": 5,
+        "professor": "Daniela Gomes"
+    },
+    {
+        "nome": "EMPREENDEDORISMO",
+        "periodo": 5,
+        "professor": "Eduardo Martins"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS AVANÇADAS",
+        "periodo": 5,
+        "professor": "Fernanda Alves"
+    },
+    {
+        "nome": "PRÁTICA DESPORTIVA I",
+        "periodo": 5,
+        "professor": "Gustavo Pereira"
+    },
+    {
+        "nome": "RELAÇÕES ÉTNICO-RACIAIS, GÊNERO E DIVERSIDADE",
+        "periodo": 5,
+        "professor": "Helena Souza"
+    },
+    {
+        "nome": "ELETRICIDADE E MAGNETISMO",
+        "periodo": 5,
+        "professor": "Igor Carvalho"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL III",
+        "periodo": 5,
+        "professor": "Julia Rocha"
+    },
+    {
+        "nome": "MÉTODOS NUMÉRICOS",
+        "periodo": 5,
+        "professor": "Leonardo Ferreira"
+    },
+    {
+        "nome": "LIBRAS- LINGUA BRASILEIRA DE SINAIS",
+        "periodo": 5,
+        "professor": "André Santos"
+    },
+    {
+        "nome": "TEORIA DA COMPUTAÇÃO",
+        "periodo": 5,
+        "professor": "Beatriz Lima"
+    },
+    {
+        "nome": "SISTEMAS DISTRIBUÍDOS",
+        "periodo": 5,
+        "professor": "Caio Ribeiro"
+    },
+    {
+        "nome": "ENGENHARIA DE SOFTWARE I",
+        "periodo": 5,
+        "professor": "Daniela Gomes"
+    },
+    {
+        "nome": "SEGURANÇA EM SISTEMAS",
+        "periodo": 5,
+        "professor": "Eduardo Martins"
+    },
+    {
+        "nome": "INTELIGÊNCIA ARTIFICIAL",
+        "periodo": 5,
+        "professor": "Fernanda Alves"
+    },
+    {
+        "nome": "COMPUTAÇÃO PARALELA",
+        "periodo": 6,
+        "professor": "Gustavo Pereira"
+    }
+]

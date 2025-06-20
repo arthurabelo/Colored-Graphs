@@ -948,5 +948,10 @@
         "nome": "TÓPICOS EM AUTOMAÇÃO DE DRONES XI",
         "periodo": 5,
         "professor": "Arthur Rabelo"
+    },
+    {
+        "nome": "TÓPICOS EM SISTEMAS DE AUTOMAÇÃO COMERCIAL I",
+        "periodo": 4,
+        "professor": "João Silva"
     }
 ]

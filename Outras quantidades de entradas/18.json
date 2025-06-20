@@ -1,0 +1,92 @@
+[
+    {
+        "nome": "INGLÊS TÉCNICO E CIENTÍFICO",
+        "periodo": 1,
+        "professor": "Lucas Almeida"
+    },
+    {
+        "nome": "INTRODUÇÃO À LÓGICA",
+        "periodo": 1,
+        "professor": "Mariana Costa"
+    },
+    {
+        "nome": "SEMINÁRIOS DE INTRODUÇÃO AO CURSO",
+        "periodo": 1,
+        "professor": "Pedro Rocha"
+    },
+    {
+        "nome": "INFORMÁTICA E SOCIEDADE",
+        "periodo": 2,
+        "professor": "Sofia Oliveira"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 2,
+        "professor": "Thiago Santos"
+    },
+    {
+        "nome": "INTRODUÇÃO À METODOLOGIA CIENTÍFICA",
+        "periodo": 2,
+        "professor": "Vanessa Pereira"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL I",
+        "periodo": 3,
+        "professor": "William Dias"
+    },
+    {
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 3,
+        "professor": "Lucas Almeida"
+    },
+    {
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 3,
+        "professor": "Mariana Costa"
+    },
+    {
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO",
+        "periodo": 4,
+        "professor": "Pedro Rocha"
+    },
+    {
+        "nome": "CIRCUITOS DIGITAIS",
+        "periodo": 4,
+        "professor": "Sofia Oliveira"
+    },
+    {
+        "nome": "CÁLCULO DIFERENCIAL E INTEGRAL II",
+        "periodo": 4,
+        "professor": "Thiago Santos"
+    },
+    {
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 5,
+        "professor": "Vanessa Pereira"
+    },
+    {
+        "nome": "PROBABILIDADE E ESTATÍSTICA",
+        "periodo": 5,
+        "professor": "William Dias"
+    },
+    {
+        "nome": "BANCO DE DADOS",
+        "periodo": 5,
+        "professor": "Lucas Almeida"
+    },
+    {
+        "nome": "INTERFACE HUMANO COMPUTADOR",
+        "periodo": 6,
+        "professor": "Mariana Costa"
+    },
+    {
+        "nome": "TEORIA E APLICAÇÕES EM GRAFOS",
+        "periodo": 6,
+        "professor": "Pedro Rocha"
+    },
+    {
+        "nome": "ARQUITETURA DE COMPUTADORES",
+        "periodo": 6,
+        "professor": "Sofia Oliveira"
+    }
+]
